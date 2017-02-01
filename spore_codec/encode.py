@@ -1,6 +1,5 @@
 from collections import OrderedDict
 from coreapi.document import Link
-from django.conf import settings
 
 from . import helpers
 

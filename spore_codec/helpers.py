@@ -1,5 +1,4 @@
 from collections import OrderedDict
-from django.conf import settings
 from importlib import import_module
 
 

@@ -11,7 +11,7 @@ with open('LICENSE') as f:
 
 setup(
     name='python-spore-codec',
-    version='0.1.1',
+    version='0.2.0',
     description='Spore codec for CoreAPI specification',
     long_description=readme,
     author='Arnaud Grausem',

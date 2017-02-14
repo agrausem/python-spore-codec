@@ -4,9 +4,9 @@ python:
  - "3.5"
  - "3.6"
 install:
- - pip install -rU requirements.txt
+ - pip install -Ur requirements.txt
  - pip install -e .
- - pip install -rU requirements-test.txt
+ - pip install -Ur requirements-test.txt
 script:
  - py.test --cov=spore_codec
 after_success:

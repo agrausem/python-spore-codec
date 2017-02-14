@@ -1,11 +1,12 @@
-from coreapi.document import Link, Field, Document
+from coreapi.document import Field, Document, Link
+from spore_codec.core import Link as SporeLink
 
 
 def _build_link(url, action, encoding, description, fields=None,
                 authentication=False, formats=()):
-    link = Link(url, action, encoding, None, None, description, fields)
-    link._authentication = authentication
-    link._formats = formats
+    link =  SporeLink(url, action, encoding, None, None, description, fields,
+                     authentication, formats)
+    print(action, link.action, vars(link))
     return link
 
 

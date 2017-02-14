@@ -41,11 +41,11 @@ def build_method_from_link(link: Link, formats: list) -> OrderedDict:
         method_attributes.append(('payload_format', link.encoding))
 
     # TODO: enhance this part
-    if set(formats) != set(link._formats):
-        method_attributes.append(('formats', link._formats))
+    if set(formats) != set(link.formats):
+        method_attributes.append(('formats', link.formats))
 
     method_attributes.extend([
-        ('authentication', link._authentication),
+        ('authentication', link.authentication),
         ('documentation', link.description)
     ])
 
@@ -73,7 +73,7 @@ def generate_spore_object(document, global_formats, spore_settings):
     TODO: spore settings definition and integration
     """
 
-    methods = get_spore_methods_from_document(document, global_formats)
+    methods = get_spore_methods_from_document(document, (), global_formats)
 
     spore = OrderedDict()
     spore["name"] = document.title

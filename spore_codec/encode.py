@@ -13,7 +13,7 @@ def get_spore_method_name(keys: list, action: str) -> str:
     if not keys:
         return action
 
-    object_name = ''.join(reversed(keys))
+    object_name = '_'.join(keys)
     if action in ('list', ):
         if not object_name.endswith('s'):
             object_name = object_name + 's'

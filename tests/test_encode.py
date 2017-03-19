@@ -19,7 +19,7 @@ class TestSporeMethodName:
     def test_multiple_keys(self):
         assert get_spore_method_name(
             ('user', 'admin', 'inactive'), 'list'
-        ) == 'list_inactiveadminusers'
+        ) == 'list_user_admin_inactives'
 
     def test_one_level(self):
         assert get_spore_method_name((), 'level') == 'level'
@@ -123,8 +123,8 @@ class TestMethodFromDocument:
         methods = get_spore_methods_from_document(document)
         names = [name for name, _ in methods]
         assert len(methods) == 5
-        assert sorted(names) == ['create_user', 'get_groupsuser', 'hello',
-                                 'list_groupsusers', 'list_users']
+        assert sorted(names) == ['create_user', 'get_users_group', 'hello',
+                                 'list_users', 'list_users_groups',]
 
 
 class TestFullSporeDescription:

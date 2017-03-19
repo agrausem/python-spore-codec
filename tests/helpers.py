@@ -1,5 +1,5 @@
 from coreapi.document import Field, Document, Link
-from spore_codec.core import Link as SporeLink
+from spore_codec.document import Link as SporeLink
 
 
 def _build_link(url, action, encoding, description, fields=None,

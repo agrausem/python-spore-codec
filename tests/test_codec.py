@@ -1,6 +1,7 @@
 import coreapi
 import json
-from spore_codec.core import SporeDescriptionCodec, Link
+from spore_codec.core import SporeDescriptionCodec
+from spore_codec.document import Link
 
 
 class TestSporeCodec:

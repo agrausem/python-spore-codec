@@ -1,11 +1,11 @@
 import json
-
-from coreapi import Link as BaseLink
 from coreapi.codecs.base import BaseCodec
 from coreapi.compat import COMPACT_SEPARATORS, VERBOSE_SEPARATORS
 from coreapi.compat import force_bytes
 from coreapi.document import Document
+from coreapi.exceptions import ParseError
 from .encode import generate_spore_object
+from .decode import parse_spore_description
 
 
 class SporeDescriptionCodec(BaseCodec):
@@ -14,7 +14,17 @@ class SporeDescriptionCodec(BaseCodec):
     format = 'spore'
 
     def decode(self, bytestring, **options):
-        pass
+        try:
+            spore_desc = json.loads(bytestring.decode('utf-8'))
+        except ValueError as exc:
+            raise ParseError('Malformed JSON. %s' % exc)
+
+        base_url = options.get('base_url', '')
+        coreapi_doc = parse_spore_description(spore_desc, base_url)
+        if not isinstance(coreapi_doc, Document):
+            raise ParseError('Top level node must be a document.')
+
+        return coreapi_doc
 
     def encode(self, document, **options):
         if not isinstance(document, Document):
@@ -34,36 +44,3 @@ class SporeDescriptionCodec(BaseCodec):
         return force_bytes(json.dumps(data, **kwargs))
 
 
-class Link(BaseLink):
-
-    def __init__(self, url=None, action=None, encoding=None,
-                 transform=None, title=None, description=None, fields=None,
-                 authentication=None, formats=None):
-        super().__init__(url, action, encoding, transform, title, description,
-                         fields)
-        if (authentication is not None) and (not isinstance(authentication,
-                                                            bool)):
-            raise TypeError("Argument 'authentication' must be a boolean.")
-        if (formats is not None) and (not isinstance(formats, (list, tuple))):
-            raise TypeError("Argument 'formats' must be a list.")
-
-        self._authentication = (False if (authentication is None) else
-                             authentication)
-        self._formats = () if (formats is None) else formats
-
-
-    @classmethod
-    def from_base_link(cls, link, authentication, formats):
-        instance = cls(link.url, link.action, link.encoding, link.transform,
-                       link.title, link.description, link.fields,
-                       authentication, formats)
-        del link
-        return instance
-
-    @property
-    def authentication(self):
-        return self._authentication
-
-    @property
-    def formats(self):
-        return self._formats

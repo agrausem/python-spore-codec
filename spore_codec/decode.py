@@ -14,7 +14,7 @@ def parse_spore_description(data, base_url=None):
     content = {}
 
     for method in spore_methods.items():
-        keys, action, link = _get_link_from_method(method)
+        action, keys, link = _get_link_from_method(method)
 
         base_dict = content
         for key in keys:
@@ -23,7 +23,7 @@ def parse_spore_description(data, base_url=None):
 
     return Document(
         title=data.get('name'),
-        base_url=schema_url,
+        url=schema_url,
         description=description,
         content=content,
         media_type='application/sporeapi+json'
@@ -36,10 +36,12 @@ def _get_link_from_method(method):
     link = Link(
         url=spore_method.get('path'),
         action=spore_method.get('method').lower(),
-        title=spore_name,
+        title=spore_method.get('description',
+                               spore_name.replace('_', ' ').capitalize()),
         authentication=spore_method.get('authentication', False),
         formats=spore_method.get('formats', []),
-        fields=_get_fields_from_method(spore_method)
+        fields=_get_fields_from_method(spore_method),
+        description=spore_method.get('documentation', '')
     )
     return action, keys, link
 

@@ -2,4 +2,4 @@ init:
 	pip install -r requirements.txt
 
 test:
-	pytest --cov=spore_codec -v
+	pytest --cov-report=html --cov=spore_codec -v

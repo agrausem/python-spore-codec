@@ -75,6 +75,9 @@ def generate_spore_object(document, global_formats, spore_settings):
 
     methods = get_spore_methods_from_document(document, (), global_formats)
 
+    for _, link in methods:
+        link['path'] = link['path'].replace(document.url, '/')
+
     spore = OrderedDict()
     spore["name"] = document.title
     spore["base_url"] = document.url
